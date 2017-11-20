@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 try:
     from .secret_key import SECRET_KEY
-except ModuleNotFoundError:
+except ImportError:
     SECRET_KEY = '2h-qm+68(6$5cyopoh4engz_x6ncj$4d^v6$^vdn^v1z$dq*ag'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'account',
     'blog',
 ]
 
