@@ -102,4 +102,4 @@ ENV/
 
 /blog_server/secret_key.py
 /db.sqlite3
-
+/statics/
