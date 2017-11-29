@@ -8,6 +8,7 @@ from .serializers import ArticleSerializer, ReplySerializer, TagSerializer
 class ArticleViewset(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    filter_fields = ['title', 'title__icontains']
 
 
 class TagViewset(viewsets.ModelViewSet):
