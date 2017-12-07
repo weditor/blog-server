@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.viewsets import mixins
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -14,6 +15,7 @@ def GetUser(request):
     return JsonResponse(UserSerializer(request.user).data)
 
 
+@csrf_exempt
 def login_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
