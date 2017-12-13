@@ -5,7 +5,7 @@ from django.db import models
 
 class Tag(models.Model):
     name = models.CharField('标签', max_length=30)
-    synonym = models.ForeignKey('self', verbose_name='关联标签', null=True, blank=True)
+    synonym = models.ForeignKey('self', verbose_name='关联标签', null=True, blank=True, on_delete=models.SET_NULL)
     description = models.CharField('描述', max_length=100)
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     change_time = models.DateTimeField('修改时间', auto_now=True)
@@ -21,6 +21,6 @@ class Article(models.Model):
 
 class Reply(models.Model):
     content = models.CharField('内容', max_length=150)
-    article = models.ForeignKey(Article, verbose_name="所属文章")
-    quote = models.ForeignKey('self', verbose_name="引用", null=True, blank=True)
+    article = models.ForeignKey(Article, verbose_name="所属文章", on_delete=models.CASCADE)
+    quote = models.ForeignKey('self', verbose_name="引用", null=True, blank=True, on_delete=models.SET_NULL)
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
