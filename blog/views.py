@@ -2,7 +2,11 @@ from django.shortcuts import render
 from rest_framework import viewsets, generics, mixins
 from .models import Article, Tag, Reply
 from .serializers import ArticleSerializer, ReplySerializer, TagSerializer
+# from mylib.filters import CommonFilter
 # Create your views here.
+
+
+
 
 
 class ArticleViewset(viewsets.ModelViewSet):
@@ -14,6 +18,7 @@ class ArticleViewset(viewsets.ModelViewSet):
 class TagViewset(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    filter_fields = ['name__icontains']
 
     def destroy(self, request, *args, **kwargs):
         raise NotImplementedError('not implement')
@@ -25,4 +30,3 @@ class ReplyViewset(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         raise NotImplementedError('not implement')
-

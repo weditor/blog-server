@@ -6,9 +6,12 @@ from django.db import models
 class Tag(models.Model):
     name = models.CharField('标签', max_length=30)
     synonym = models.ForeignKey('self', verbose_name='关联标签', null=True, blank=True, on_delete=models.SET_NULL)
-    description = models.CharField('描述', max_length=100)
+    description = models.CharField('描述', max_length=100, default="", blank=True)
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     change_time = models.DateTimeField('修改时间', auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Article(models.Model):
@@ -17,6 +20,9 @@ class Article(models.Model):
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     change_time = models.DateTimeField('修改时间', auto_now=True)
     tags = models.ManyToManyField(Tag, verbose_name="文章标签")
+    
+    def __str__(self):
+        return self.title
 
 
 class Reply(models.Model):
