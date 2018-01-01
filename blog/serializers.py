@@ -5,12 +5,13 @@ from .models import Article, Tag, Reply
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['id', 'name', 'description', 'create_time', 'change_time']
+        fields = ['id', 'name', 'pinyin', 'description', 'create_time', 'change_time']
+        extra_kwargs = {'pinyin': {'read_only': True}}
 
 
 class ArticleSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
-        data['tags'] = [Tag.objects.get(name=name).id for name in data['tags']]
+        data['tags'] = [Tag.objects.get_or_create(name=name).id for name in data['tags']]
         return super(ArticleSerializer, self).to_internal_value(data)
 
     def to_representation(self, instance):

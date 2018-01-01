@@ -1,14 +1,20 @@
 from django.db import models
-
+from pypinyin import lazy_pinyin
 # Create your models here.
 
 
 class Tag(models.Model):
     name = models.CharField('标签', max_length=30)
+    pinyin = models.CharField('拼音', max_length=100)
     synonym = models.ForeignKey('self', verbose_name='关联标签', null=True, blank=True, on_delete=models.SET_NULL)
     description = models.CharField('描述', max_length=100, default="", blank=True)
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     change_time = models.DateTimeField('修改时间', auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.pinyin = ''.join(lazy_pinyin(self.name))
+        self.pinyin = self.pinyin[:100]
+        return super(Tag, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
