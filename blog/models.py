@@ -25,7 +25,7 @@ class Article(models.Model):
     content = models.TextField(verbose_name='内容')
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     change_time = models.DateTimeField('修改时间', auto_now=True)
-    tags = models.ManyToManyField(Tag, verbose_name="文章标签")
+    tags = models.ManyToManyField(Tag, verbose_name="文章标签", blank=True)
     
     def __str__(self):
         return self.title
