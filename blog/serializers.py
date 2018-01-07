@@ -11,7 +11,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
-        data['tags'] = [Tag.objects.get_or_create(name=name).id for name in data['tags']]
+        data['tags'] = [Tag.objects.get_or_create(name=name)[0].id for name in data['tags']]
         return super(ArticleSerializer, self).to_internal_value(data)
 
     def to_representation(self, instance):
