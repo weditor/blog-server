@@ -19,9 +19,7 @@ def GetUser(request):
 def login_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-    print(username, password)
     user = authenticate(username=username, password=password)
-    print('user is', user)
     if user is None:
         return JsonResponse(UserSerializer(None).data)
     login(request, user)

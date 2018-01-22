@@ -13,3 +13,17 @@ class CommonFilter(BaseFilterBackend):
         return queryset.filter(**kw)
 
 
+class SortFilter(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        sorted = getattr(view, 'sort_by', [])
+        sort_fields = getattr(view, 'sort_fields', [])
+        args = []
+        for field in request.query_params.get('sort_by', '').split(','):
+            field = field.strip()
+            if not field:
+                continue
+            if sort_fields and field.rstrip('-') not in sort_fields:
+                continue
+            args.append(field)
+        return queryset.order_by(*args)
+

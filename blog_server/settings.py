@@ -135,5 +135,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'mylibs.filters.CommonFilter',
+        'mylibs.filters.SortFilter',
     ),
 }

@@ -12,10 +12,9 @@ class ArticleViewset(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     filter_fields = ['title', 'title__icontains']
-
+    
     def get_queryset(self):
         queryset = super(ArticleViewset, self).get_queryset()
-        print (self.request.user)
         if not self.request.user or not self.request.user.is_authenticated:
             queryset = queryset.filter(is_private=False).exclude(tags__in=Tag.objects.filter(is_private=True))
         return queryset
