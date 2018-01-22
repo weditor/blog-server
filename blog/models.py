@@ -1,5 +1,6 @@
 from django.db import models
 from pypinyin import lazy_pinyin
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -10,6 +11,7 @@ class Tag(models.Model):
     description = models.CharField('描述', max_length=100, default="", blank=True)
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     change_time = models.DateTimeField('修改时间', auto_now=True)
+    is_private = models.BooleanField('私密', default=False)
 
     def save(self, *args, **kwargs):
         self.pinyin = ''.join(lazy_pinyin(self.name))
@@ -26,7 +28,9 @@ class Article(models.Model):
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     change_time = models.DateTimeField('修改时间', auto_now=True)
     tags = models.ManyToManyField(Tag, verbose_name="文章标签", blank=True)
-    
+    is_private = models.BooleanField('私密', default=False)
+    ceator = models.ForeignKey(User, verbose_name='创建者', on_delete=models.SET_NULL, null=True, auto_created=True)
+
     def __str__(self):
         return self.title
 
@@ -36,3 +40,4 @@ class Reply(models.Model):
     article = models.ForeignKey(Article, verbose_name="所属文章", on_delete=models.CASCADE)
     quote = models.ForeignKey('self', verbose_name="引用", null=True, blank=True, on_delete=models.SET_NULL)
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
+    ceator = models.ForeignKey(User, verbose_name='创建者', on_delete=models.SET_NULL, null=True)
