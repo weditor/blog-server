@@ -137,4 +137,6 @@ REST_FRAMEWORK = {
         'mylibs.filters.CommonFilter',
         'mylibs.filters.SortFilter',
     ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
 }
